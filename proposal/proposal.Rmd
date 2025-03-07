@@ -17,22 +17,6 @@ Our data comes from Androscoggin County High school. They surveyed their student
 
 Research Question: How big a role do home support systems play in the health of Androscoggin youth? 
 
-1. We are viewing how many times in the past year (12 months) have you been drunk or high in school. Percentage of students who. have answered at least one time. 
-
-1. Categorizing total percentage of students by age
-
-2. Categorizing a graph by gender 
-
-3. Making a graph of ethnicity
-
-4.Data of "Have good parents to talk to" vs. the data of amount of times high or drunk in school
-
-5. Data of high/drunk y vs. If you wanted to get marijuana how easy would it be
-
-6.Had drugs sold to them on school property vs. Data of high/drunk 
-
-
-
 ## 2. Data
 
 ```{r}
@@ -48,9 +32,15 @@ view (Growth_data)
 
 ## 3. Data analysis plan
 
-Based on our research question, "How big a role do systems of support (through school or family) play in the health of Androscoggin youth?", we plan to compare various indications of good support systems against indications of unhealthy youth behavior. For example, we plan to create a visualization and analysis to contrast how much a child feels supported by their parents against how easy it would be for them to attain drugs. How effective is a good support system (how much the child feels supported by their parents) in preventing unhealthy behavior (buying/using drugs)? 
+Based on our research question, we plan to compare various indications of good support systems against indications of unhealthy youth behavior. For example, we plan to create a visualization and analysis to contrast how much a child feels supported by their parents against how easy it would be for them to attain drugs. How effective is a good familial support system (how much the student feels supported by their parents) in preventing unhealthy behavior (buying/using drugs)? 
 
-We will likely use a bar graph similar to the one below to visualize the patterns between the data.   
+To answer the question effectively, we will create multiple visualizations similar to this, including:
+
+- How many times in the past year (12 months) have you been drunk or high in school (percentage of students who answered one time or more)? vs. Students who answered 'Very or often' or 'Extremely or almost always' to 'I have parents who are good at talking with me about things.' 
+
+- During the past 30 days, on how many days did you smoke cigars, cigarillos, or little cigars (percentage of students who answered 'at least one day')? vs. Students who answered 'Very or often' or 'Extremely or almost always' to 'I have parents who are good at talking with me about things.' 
+
+We plan to categorize and consider variables within the datasets such as race and gender. We will likely use a bar graph similar to the one below to visualize the patterns between the data.   
 
 
 ```{r}
