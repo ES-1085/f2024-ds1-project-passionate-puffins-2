@@ -5,6 +5,7 @@ output: html_document
 ---
 
 ```{r load-packages, message = FALSE}
+#install.packages("tidyverse")
 library(tidyverse)
 library(broom)
 library(readxl)
@@ -12,30 +13,21 @@ library(readxl)
 
 ## 1. Introduction
 
-Our data set is: Androscoggin County High school detailed tables on surveyed questions high schoolers were asked. 
-Question: How healthy are kids in the Androscoggin County High School?
+Our data comes from Androscoggin County High school. They surveyed their students about drug use, alcohol consumption, smoking habits, eating habits, home lives, and how much support they felt they were recieving from their parents. We will be using this data to evaluate the health of students at Androscoggin County High school compared to how much support they feel they are recieving from their parents.  
 
-1. We are viewing how many times in the past year (12 months) have you been drunk or high in school. Percentage of students who. have answered at least one time. 
-
-1. Categorizing total percentage of students by age
-
-2. Categorizing a graph by gender 
-
-3. Making a graph of ethnicity
-
-4.Data of "Have good parents to talk to" vs. the data of amount of times high or drunk in school
-
-5. Data of high/drunk y vs. If you wanted to get marijuana how easy would it be
-
-6.Had drugs sold to them on school property vs. Data of high/drunk 
-
-
+Research Question: How big a role do home support systems play in the health of Androscoggin youth? 
 
 ## 2. Data
 
 ```{r rename-variables}
 Growth_data <- read_xlsx("../data/How many times in the past year (12 months) have you been drunk or high at school? (hn126) Percentage of students who answered at least 1 time.xlsx")
 
+
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+
+Growth_vs_family <- full_join(Growth_data, 
+                              family_support_data, 
+                              by = "Grade")
 
 ```
 
@@ -48,27 +40,47 @@ Growth_data <- Growth_data %>%
 ```
 
 ```{r View Data }
-view (Growth_data)
+view (Growth_vs_family)
+view(Growth_data)
 ```
 
 ```{r Glimpse of The Data}
 glimpse(Growth_data)
+glimpse(Growth_vs_family)
 ```
 ```{r}
 dim(Growth_data) 
+dim(Growth_vs_family)
 ```
 
 
-Our data set is 10x9 with 10 different variables and 70 observations that we are going to be able to incorporate into visualizations. There is no code book for the data set as I had to manually input all of the data into an excel sheet as the format we were given the data was not suitable to use in r. I am in the process of incorporating more data into our set that will allow us to gain additional insight into potentially what the cause is for these students showing up drunk or high to school is. We have categorical variables as well as discrete numerical variables within our set. As I add more data to the set we will be able to include continuous numerical variables which will allow us to see a range of percentages for variables.  
+Our first data set is called Growth_data which is a 10x9 deta set with 10 different variables and 70 observations that we are going to be able to incorporate into visualizations. There is no code book for the data set as I had to manually input all of the data into an excel sheet as the format we were given the data was not suitable to use in r. We have added an additional data set called Grow_vs_family that has the dimensions of 17x39 with roughly 250 observations and 15 variable. We are still in the process of finalizing our data. We have categorical variables as well as discrete numerical variables within our set. As I add more data to the set we will be able to include continuous numerical variables which will allow us to see a range of percentages for variables.  
 
 
 ## 3. Data analysis plan
 
-Text goes here.
+Based on our research question, we plan to compare various indications of good support systems against indications of unhealthy youth behavior. For example, we plan to create a visualization and analysis to contrast how much a child feels supported by their parents against how easy it would be for them to attain drugs. How effective is a good familial support system (how much the student feels supported by their parents) in preventing unhealthy behavior (buying/using drugs)? 
+
+To answer the question effectively, we will create multiple visualizations similar to this, including:
+
+- How many times in the past year (12 months) have you been drunk or high in school (percentage of students who answered one time or more)? vs. Students who answered 'Very or often' or 'Extremely or almost always' to 'I have parents who are good at talking with me about things.' 
+
+- During the past 30 days, on how many days did you smoke cigars, cigarillos, or little cigars (percentage of students who answered 'at least one day')? vs. Students who answered 'Very or often' or 'Extremely or almost always' to 'I have parents who are good at talking with me about things.' 
+
+- During the past 30 days, how many times did you drive a car or other vehicle when you had been drinking alcohol (among students who drove a car or other vehicle during the past 30 days, the percentage who answered at least 1 time)? vs. Percentage of students who answered 'Very or often' or 'Extremely or almost always' to 'I have a family that gives me love and support.'
+
+We plan to categorize and consider variables within the datasets such as grade, age, race, and gender. We will likely use a bar graph similar to the one below to visualize the patterns between the data.   
 
 
 ```{r}
-# Code goes here
+Growth_data |>
+  ggplot(aes(x = Grade, y = `Percent Total Grade`)) +
+  geom_col(na.rm = TRUE) +
+  labs(x = 'Grade', 
+       y = 'Percentage Who Answered At Least One Time', 
+       title = 'How many times in the past year have you been drunk/high at school?', 
+       subtitle = "Grade vs. Students Who Answered At Least One Time")
+
 ```
 
 
