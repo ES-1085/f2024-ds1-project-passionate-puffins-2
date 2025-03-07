@@ -40,6 +40,8 @@ To answer the question effectively, we will create multiple visualizations simil
 
 - During the past 30 days, on how many days did you smoke cigars, cigarillos, or little cigars (percentage of students who answered 'at least one day')? vs. Students who answered 'Very or often' or 'Extremely or almost always' to 'I have parents who are good at talking with me about things.' 
 
+- During the past 30 days, how many times did you drive a car or other vehicle when you had been drinking alcohol (among students who drove a car or other vehicle during the past 30 days, the percentage who answered at least 1 time)? vs. Percentage of students who answered 'Very or often' or 'Extremely or almost always' to 'I have a family that gives me love and support.'
+
 We plan to categorize and consider variables within the datasets such as race and gender. We will likely use a bar graph similar to the one below to visualize the patterns between the data.   
 
 
