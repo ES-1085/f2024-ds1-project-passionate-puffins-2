@@ -383,7 +383,35 @@ high/drunk</p>
 <div id="data" class="section level2">
 <h2>2. Data</h2>
 <pre class="r"><code>Growth_data &lt;- read_xlsx(&quot;../data/How many times in the past year (12 months) have you been drunk or high at school? (hn126) Percentage of students who answered at least 1 time.xlsx&quot;)</code></pre>
+<pre class="r"><code>Growth_data &lt;- Growth_data %&gt;%
+  rename(&quot;Percent Total Age&quot; = &quot;Percent Total Ague&quot;)</code></pre>
 <pre class="r"><code>view (Growth_data)</code></pre>
+<pre class="r"><code>glimpse(Growth_data)</code></pre>
+<pre><code>## Rows: 9
+## Columns: 10
+## $ Age                     &lt;chr&gt; NA, NA, &quot;&lt;=14&quot;, &quot;15.0&quot;, &quot;16.0&quot;, &quot;17.0&quot;, &quot;&gt;=18&quot;…
+## $ `Percent Total Age`     &lt;dbl&gt; 0.125, NA, 0.108, 0.132, 0.116, 0.130, 0.140, …
+## $ `Female Age`            &lt;dbl&gt; 0.115, NA, 0.086, 0.134, 0.112, 0.104, 0.152, …
+## $ `Male Age`              &lt;dbl&gt; 0.136, NA, 0.142, 0.132, 0.123, 0.158, 0.130, …
+## $ Grade                   &lt;chr&gt; NA, NA, &quot;Grade 9&quot;, &quot;Grade 10&quot;, &quot;Grade 11&quot;, &quot;Gr…
+## $ `Percent Total Grade`   &lt;dbl&gt; NA, NA, 0.109, 0.115, 0.142, 0.133, NA, NA, NA
+## $ `Female by Grade`       &lt;dbl&gt; NA, NA, 0.130, 0.091, 0.119, 0.122, NA, NA, NA
+## $ `Male by Grade`         &lt;dbl&gt; NA, NA, 0.083, 0.147, 0.165, 0.144, NA, NA, NA
+## $ Race                    &lt;chr&gt; NA, NA, &quot;American Indian/Alaskan Native&quot;, &quot;Asi…
+## $ `Percent Total By Race` &lt;chr&gt; NA, NA, &quot;0.218&quot;, &quot;*&quot;, &quot;0.048&quot;, &quot;0.305&quot;, &quot;*&quot;, &quot;…</code></pre>
+<pre class="r"><code>dim(Growth_data) </code></pre>
+<pre><code>## [1]  9 10</code></pre>
+<p>Our data set is 10x9 with 10 different variables and 70 observations
+that we are going to be able to incorporate into visualizations. There
+is no code book for the data set as I had to manually input all of the
+data into an excel sheet as the format we were given the data was not
+suitable to use in r. I am in the process of incorporating more data
+into our set that will allow us to gain additional insight into
+potentially what the cause is for these students showing up drunk or
+high to school is. We have categorical variables as well as discrete
+numerical variables within our set. As I add more data to the set we
+will be able to include continuous numerical variables which will allow
+us to see a range of percentages for variables.</p>
 </div>
 <div id="data-analysis-plan" class="section level2">
 <h2>3. Data analysis plan</h2>
