@@ -5,6 +5,7 @@ output: html_document
 ---
 
 ```{r load-packages, message = FALSE}
+#install.packages("tidyverse")
 library(tidyverse)
 library(broom)
 ```
@@ -27,7 +28,9 @@ view (Growth_data)
 
 ## 3. Data analysis plan
 
-Text goes here.
+Based on our research question, "How big a role do systems of support (through school or family) play in the health of Androscoggin youth?", we plan to compare various indications of good support systems against indications of unhealthy youth behavior. For example, we plan to create a visualization and analysis to contrast how much a child feels supported by their parents against how easy it would be for them to attain drugs. How effective is a good support system (how much the child feels supported by their parents) in preventing unhealthy behavior (buying/using drugs)? 
+
+We will likely use a bar graph similar to the one below to visualize the patterns between the data.   
 
 
 ```{r}
