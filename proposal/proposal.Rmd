@@ -32,19 +32,19 @@ Growth_vs_family <- full_join(Growth_data,
 ```
 
 
-```{r rename varaible}
+```{r rename-varaible}
 
 Growth_data <- Growth_data %>%
   rename("Percent Total Age" = "Percent Total Ague")
          
 ```
 
-```{r View Data }
+```{r View-Data }
 view (Growth_vs_family)
 view(Growth_data)
 ```
 
-```{r Glimpse of The Data}
+```{r Glimpse-of-The-Data}
 glimpse(Growth_data)
 glimpse(Growth_vs_family)
 ```

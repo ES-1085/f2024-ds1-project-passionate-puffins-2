@@ -2,12 +2,19 @@
 
 Place data file(s) in this folder.
 
-Then, include codebooks (variables, and their descriptions) for your data file(s)
-using the following format.
+Drunk_high_at_school <- read_xlsx("../data/How many times in the past year (12 months) have you been drunk or high at school? (hn126) Percentage of students who answered at least 1 time.xlsx")
 
-## name of data file
+- `Drunk_high_at_school`: A file containing data of the percentage of students who said they were drunk or high at school at least one time. 
 
-- `variable1`: Description of variable 1
-- `variable2`: Description of variable 2
-- `variable3`: Description of variable 3
-- ...
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+
+- `family_support_data`: A file containing data of the percentage of students who said that they generally have the support of their parents at home. 
+
+Growth_vs_family <- full_join(Drunk_high_at_school, family_support_data, by = "Grade")
+
+- `Growth_vs_family`: A variable that joins the family_support_data and Drunk_high_at_school data. This makes it easier to compare the percentage of students that say that they've been drunk or high at school by the percentage of students who say they have their parents' support.  
+
+
+
+
+
