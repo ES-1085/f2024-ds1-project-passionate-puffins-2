@@ -1,0 +1,8 @@
+For when we have imported data about smoking: 
+```{r smoking}
+smoked_data <- smoked_data |>
+  mutate(Percentage = as.numeric(str_extract(`X.`, pattern = "\\d+.\\d+")),
+         Lower_CI = as.numeric(str_extract(`Confidence.Interval`, pattern = "\\d+.\\d+")),
+         Upper_CI = as.numeric(str_extract(str_extract(`Confidence.Interval`, pattern = "-\\s*(\\d+\\.\\d+)"), pattern = "\\d+\\.\\d+")))
+```
+
