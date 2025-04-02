@@ -1,7 +1,9 @@
 --- 
 title: "Project proposal"
 author: "Passionate Puffins"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r load-packages, message = FALSE}
@@ -36,19 +38,19 @@ Drinking_vs_family <- full_join(Drinking_data,
 
 ```{r rename-varaible}
 
-Drinking_data <- Drinking_data |>
-  rename("Percent Total Age" = "Percent Total Age")
+#Drinking_data <- Drinking_data |>
+ # rename("Percent Total Ague" = "Percent Total Age")
          
 ```
 
 ```{r View-Data }
-view (Growth_vs_family)
+view (Drinking_vs_family)
 view (Drinking_data)
 ```
 
 ```{r Glimpse-of-The-Data}
 glimpse(Drinking_data)
-glimpse(Growth_vs_family)
+glimpse(Drinking_vs_family)
 ```
 ```{r}
 dim(Drinking_data) 
