@@ -75,6 +75,8 @@ Drinking_vs_family |>
        title = 'How many times in the past year have you been drunk/high at school?', 
        subtitle = "Grade vs. Percentage of Students Who Answered 'At Least One Time'")+
   theme_classic()
+
+ggsave("../plots/plot-1.jpg", width = 10, height = 4)
 ```
 
 
@@ -113,6 +115,7 @@ Drinking_vs_family |>
        y = 'Percentage', 
        title = 'Family support vs. being drunk or high at school by grade')+
   theme_classic()
+ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
 
 ### Plot 3: ___________
