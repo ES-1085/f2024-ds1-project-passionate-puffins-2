@@ -47,19 +47,18 @@ ggsave("example-starwars-wide.png", width = 6, height = 4)
 
 
 
-### Plot 1: 
+### Plot 1: Grade vs. Drinking data
 
 #### Data cleanup steps specific to plot 1
 
 These data cleaning sections are optional and depend on if you have some data cleaning steps specific to a particular plot
 
 ```{r data-cleanup-plot-1}
-Drinking_data <- read_xlsx("../data/How many times in the past year (12 months) have you been drunk or high at school? (hn126) Percentage of students who answered at least 1 time.xlsx")
-#I don't have access to this data file to rename it. (Katie)
+Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 
 family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
 
-Drinking_vs_family <- full_join(Drinking_data, 
+Drinking_vs_family <- left_join(Drinking_data_cleaner, 
                               family_support_data, 
                               by = "Grade")
 
@@ -68,7 +67,6 @@ Drinking_vs_family <- Drinking_vs_family |>
     Grade = fct_recode(Grade, 
                        NULL = "")
   )
-Drinking_vs_family <- na.rm(Drinking_vs_family)
 ```
 
 
@@ -76,7 +74,13 @@ Drinking_vs_family <- na.rm(Drinking_vs_family)
 
 ```{r}
 Drinking_vs_family |>
-  ggplot(aes(x = Grade, y = `Percent Total Grade`, fill = Grade)) +
+  mutate('Grade' = fct_relevel(Grade,
+                               "Grade 9", 
+                               "Grade 10", 
+                               "Grade 11", 
+                               "Grade 12")) |>
+  filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
+  ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
   geom_col(na.rm = TRUE) +
   labs(x = NULL, 
        y = 'Percentage', 
@@ -86,7 +90,12 @@ Drinking_vs_family |>
 ```
 
 
-### Plot 2: _________
+### Plot 2: Family support at home vs. Drinking Data
+
+### Plot 1: 
+
+
+
 
 ### Plot 3: ___________
 
