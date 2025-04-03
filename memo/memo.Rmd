@@ -55,24 +55,12 @@ These data cleaning sections are optional and depend on if you have some data cl
 
 ```{r data-cleanup-plot-1}
 Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
-
-family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
-
-Drinking_vs_family <- left_join(Drinking_data_cleaner, 
-                              family_support_data, 
-                              by = "Grade")
-
-Drinking_vs_family <- Drinking_vs_family |>
-  mutate(
-    Grade = fct_recode(Grade, 
-                       NULL = "")
-  )
 ```
 
 
 #### Final Plot 1
 
-```{r}
+```{r plot-1-visualization}
 Drinking_vs_family |>
   mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
@@ -92,10 +80,40 @@ Drinking_vs_family |>
 
 ### Plot 2: Family support at home vs. Drinking Data
 
-### Plot 1: 
+#### Plot 2 Cleanup
+
+```{r}
+
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+
+Drinking_vs_family <- drinking_vs_family |>
+  mutate(
+    Grade = fct_recode(Grade, 
+                       NULL = "")
+  )
+```
 
 
+#### Final Plot 2
 
+```{r plot-2-visualization}
+Drinking_vs_family |>
+  mutate('Grade' = fct_relevel(Grade,
+                               "Grade 9", 
+                               "Grade 10", 
+                               "Grade 11", 
+                               "Grade 12"), 
+         FamGradePer. = as.factor(FamGradePer.)
+         )|>
+  filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
+  ggplot(aes(x = Grade, y = `GradePercent`, fill = FamGradePer.)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = NULL, 
+       y = 'Percentage', 
+       title = 'Family support vs. being drunk or high at school by grade')+
+  theme_classic()
+```
 
 ### Plot 3: ___________
 
