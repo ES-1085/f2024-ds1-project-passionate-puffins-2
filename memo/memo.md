@@ -18,6 +18,19 @@ library(broom)
 
 ### Step 1: \_\_\_\_\_\_\_\_\_
 
+``` r
+kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
+```
+
+    ## Rows: 5 Columns: 2
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Age
+    ## dbl (1): Percentage
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
 ### Step 2: \_\_\_\_\_\_\_\_
 
 ## Plots
@@ -44,13 +57,21 @@ ggsave("example-starwars.png", width = 4, height = 4)
 ggsave("example-starwars-wide.png", width = 6, height = 4)
 ```
 
+# WORK ON THISSSS!!!
+
+``` r
+#ggplot(kids_overweight, aes(x=Age, y=Percentage)) +
+#  geom_bar()
+```
+
+\`\`\`
+
 ### Plot 1: \_\_\_\_\_\_\_\_\_
 
 #### Data cleanup steps specific to plot 1
 
-``` r
-# This section is optional and depends on if you have some data cleaning steps specific to a particular plot
-```
+These data cleaning sections are optional and depend on if you have some
+data cleaning steps specific to a particular plot
 
 #### Final Plot 1
 
