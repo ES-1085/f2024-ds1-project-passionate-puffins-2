@@ -1,7 +1,9 @@
 --- 
 title: "Project proposal"
 author: "Passionate Puffins"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r load-packages, message = FALSE}
@@ -44,12 +46,16 @@ Drinking_data <- Drinking_data |>
 ```{r View-Data }
 view(family_support_data)
 view(Drinking_data)
+
 ```
 
 ```{r Glimpse-of-The-Data}
 glimpse(Drinking_data)
 glimpse(family_support_data)
+glimpse(Drinking_vs_family)
+```
 
+```{r}
 dim(Drinking_data) 
 dim(Drinking_vs_family)
 ```

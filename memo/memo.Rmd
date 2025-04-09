@@ -57,25 +57,76 @@ ggsave("example-starwars-wide.png", width = 6, height = 4)
 ```
 
 
-### Plot 1: _________
+### Plot 1: Grade vs. Drinking data
 
 #### Data cleanup steps specific to plot 1
 
 These data cleaning sections are optional and depend on if you have some data cleaning steps specific to a particular plot
 
-```{r}
-
+```{r data-cleanup-plot-1}
+Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 ```
 
 
 #### Final Plot 1
 
-```{r}
+```{r plot-1-visualization}
+Drinking_vs_family |>
+  mutate('Grade' = fct_relevel(Grade,
+                               "Grade 9", 
+                               "Grade 10", 
+                               "Grade 11", 
+                               "Grade 12")) |>
+  filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
+  ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
+  geom_col(na.rm = TRUE) +
+  labs(x = NULL, 
+       y = 'Percentage', 
+       title = 'How many times in the past year have you been drunk/high at school?', 
+       subtitle = "Grade vs. Percentage of Students Who Answered 'At Least One Time'")+
+  theme_classic()
 
+ggsave("../plots/plot-1.jpg", width = 10, height = 4)
 ```
 
 
-### Plot 2: _________
+### Plot 2: Family support at home vs. Drinking Data
+
+#### Plot 2 Cleanup
+
+```{r}
+
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+
+Drinking_vs_family <- drinking_vs_family |>
+  mutate(
+    Grade = fct_recode(Grade, 
+                       NULL = "")
+  )
+```
+
+
+#### Final Plot 2
+
+```{r plot-2-visualization}
+Drinking_vs_family |>
+  mutate('Grade' = fct_relevel(Grade,
+                               "Grade 9", 
+                               "Grade 10", 
+                               "Grade 11", 
+                               "Grade 12"), 
+         FamGradePer. = as.factor(FamGradePer.)
+         )|>
+  filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
+  ggplot(aes(x = Grade, y = `GradePercent`, fill = FamGradePer.)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = NULL, 
+       y = 'Percentage', 
+       title = 'Family support vs. being drunk or high at school by grade')+
+  theme_classic()
+ggsave("../plots/plot-2.jpg", width = 10, height = 4)
+```
 
 ### Plot 3: ___________
 
