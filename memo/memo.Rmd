@@ -16,10 +16,6 @@ library(broom)
 
 ### Step 1: _________
 
-```{r}
-kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
-
-```
 
 ### Step 2: ________
 
@@ -47,15 +43,71 @@ ggsave("example-starwars.png", width = 4, height = 4)
 ggsave("example-starwars-wide.png", width = 6, height = 4)
 ```
 
-# WORK ON THISSSS!!!
 ```{r}
-#ggplot(kids_overweight, aes(x=Age, y=Percentage)) +
-#  geom_bar()
-
+kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
 ```
 
+```{r}
+kids_overweight <- kids_overweight |>
+  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"))
+
+# Plot histogram
+ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
+  geom_histogram(stat = "count", fill = "skyblue", color = "black") +
+  labs(title = "Overweight Kids by Age",
+       x = "Age",
+       y = "Percentage of Overweight Kids") +
+  theme_minimal()
+```
+```{r}
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
 ```
 
+```{r}
+view(family_support_data)
+```
+
+```{r overweight kids vs family support}
+kids_overweight <- kids_overweight |>
+  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"),
+         source = "Overweight Data")
+
+family_support_data <- family_support_data |>
+  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"),
+         source = "Family Support Data")
+
+# Combine datasets
+combined_data <- bind_rows(kids_overweight, family_support_data)
+
+# Plot with clearer axis and spacing
+ggplot(combined_data, aes(x = Age, weight = Percentage, fill = source)) +
+  geom_histogram(stat = "count", position = position_dodge(width = 0.7), 
+                 width = 0.6, color = "black") +
+  labs(title = "Comparison: Overweight Kids vs Family Support by Age",
+       x = "Age",
+       y = "Percentage",
+       fill = "Dataset") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        text = element_text(size = 12),
+        legend.position = "top")
+```
+```{r}
+ggplot(combined_data, aes(x = Age, y = Percentage, color = source)) +
+  geom_point(position = position_dodge(width = 0.5), size = 4) +
+  labs(title = "Comparison: Overweight Kids vs Family Support by Age",
+       x = "Age",
+       y = "Percentage",
+       color = "Dataset") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        text = element_text(size = 12),
+        legend.position = "top")
+```
+
+
+
+```
 
 ### Plot 1: Grade vs. Drinking data
 
@@ -72,7 +124,7 @@ Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 
 ```{r plot-1-visualization}
 Drinking_vs_family |>
-  mutate('Grade' = fct_relevel(Grade,
+mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
                                "Grade 10", 
                                "Grade 11", 
