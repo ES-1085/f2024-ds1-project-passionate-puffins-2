@@ -14,61 +14,13 @@ library(broom)
 
 ## Data Clean Up Steps for Overall Data
 
-### Step 1: _________
+### Step 1: Load and clean all data
 
 ```{r}
 kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
 
-```
-
-### Step 2: ________
-
-## Plots
-
-### ggsave example for saving plots
-
-```{r starwars ggsave example}
-p1 <- starwars |>
-  filter(mass < 1000, 
-         species %in% c("Human", "Cerean", "Pau'an", "Droid", "Gungan")) |>
-  ggplot() +
-  geom_point(aes(x = mass, 
-                 y = height, 
-                 color = species)) +
-  labs(x = "Weight (kg)", 
-       y = "Height (m)",
-       color = "Species",
-       title = "Weight and Height of Select Starwars Species",
-       caption = paste("This data comes from the starwars api: https://swapi.py43.com"))
-
-
-ggsave("example-starwars.png", width = 4, height = 4)
-
-ggsave("example-starwars-wide.png", width = 6, height = 4)
-```
-
-# WORK ON THISSSS!!!
-```{r}
-kids_overweight |>
-  ggplot(aes(x=Age, y=Percentage)) +
-  geom_col() + 
-  labs(title = "Percentage of Kids Overweight by Age Group", 
-       x = "Age Group", 
-       y = "Percentage of Kids Overweight")
-
-```
-
-
-
-
-### Plot 1: Grade vs. Drinking data
-
-#### Data cleanup steps specific to plot 1
-
-These data cleaning sections are optional and depend on if you have some data cleaning steps specific to a particular plot
-
-```{r data-cleanup-plot-1}
 family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+
 drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
 
 Drinking_vs_family <- drinking_vs_family |>
@@ -77,6 +29,18 @@ Drinking_vs_family <- drinking_vs_family |>
                        NULL = "")
   )
 
+
+```
+
+### Step 2: ________
+
+## Plots
+
+### Plot 1: Grade vs. Drinking data
+
+#### Data cleanup steps specific to plot 1
+
+```{r data-cleanup-plot-1}
 Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 #Drinking_vs_family <- Drinking_vs_family |> 
  # as.numeric(GradePercent)
@@ -93,10 +57,13 @@ Drinking_vs_family |>
                                "Grade 9", 
                                "Grade 10", 
                                "Grade 11", 
-                               "Grade 12")) |>
+                               "Grade 12"), 
+         GradePercent = as.numeric(gsub("%", "", GradePercent))) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
   ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
   geom_col(na.rm = TRUE) +
+  scale_y_continuous(breaks = seq(0, 20, by = 5),
+                     labels = scales::label_percent(scale = 1)) + 
   labs(x = NULL, 
        y = 'Percentage', 
        title = 'How many times in the past year have you been drunk/high at school?', 
@@ -133,21 +100,42 @@ Drinking_vs_family |>
                                "Grade 10", 
                                "Grade 11", 
                                "Grade 12"), 
-         FamGradePer. = as.factor(FamGradePer.)
-         )|>
+         GradePercent = as.numeric(gsub("%", "", GradePercent)),
+         FamGradePer. = as.numeric(gsub("%", "", FamGradePer.))) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
-  ggplot(aes(x = Grade, y = `GradePercent`, fill = FamGradePer.)) +
+  pivot_longer(
+    cols = c(GradePercent, FamGradePer.),
+    names_to = "Metric",
+    values_to = "Percent") |>
+  mutate(Metric = recode(Metric,
+                       GradePercent = "Been Drunk/High at School",
+                       `FamGradePer.` = "Felt Supported by Family")) |>
+  ggplot(aes(x = Grade, y = `Percent`, fill = Metric)) +
   geom_bar(stat = "identity", position = "dodge") +
+  scale_y_continuous(breaks = seq(0, 100, by = 10),
+                     labels = scales::label_percent(scale = 1)) +
   labs(x = NULL, 
        y = 'Percentage', 
        title = 'Family support vs. being drunk or high at school by grade') +
   theme_classic()
+  
 ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
 
-### Plot 3: ___________
+### Plot 3: Percentage of overweight kids categorized by age
 
-Add more plot sections as needed. Each project should have at least 3 plots, but talk to me if you have fewer than 3.
+```{r}
+kids_overweight |>
+  ggplot(aes(x=Age, 
+             y=Percentage, 
+             fill = Age)) +
+  geom_col() + 
+  labs(title = "Percentage of Kids Overweight by Age Group", 
+       x = "Age", 
+       y = "Percentage of Kids Overweight") +
+  theme_classic()
+
+```
 
 ### Plot 4: ___________ 
 
