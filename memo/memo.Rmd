@@ -9,6 +9,7 @@ This document should contain a detailed account of the data clean up for your da
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
+
 ```
 
 ## Data Clean Up Steps for Overall Data
@@ -16,6 +17,7 @@ library(broom)
 ### Step 1: _________
 
 ```{r}
+kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
 
 ```
 
@@ -45,6 +47,14 @@ ggsave("example-starwars.png", width = 4, height = 4)
 ggsave("example-starwars-wide.png", width = 6, height = 4)
 ```
 
+# WORK ON THISSSS!!!
+```{r}
+#ggplot(kids_overweight, aes(x=Age, y=Percentage)) +
+#  geom_bar()
+
+```
+
+```
 
 
 ### Plot 1: Grade vs. Drinking data
