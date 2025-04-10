@@ -29,25 +29,16 @@ Drinking_vs_family <- drinking_vs_family |>
                        NULL = "")
   )
 
+Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
+
 
 ```
 
-### Step 2: ________
+### Step 2: Plot Specific Cleanup/Code for Visualizations
 
 ## Plots
 
 ### Plot 1: Grade vs. Drinking data
-
-#### Data cleanup steps specific to plot 1
-
-```{r data-cleanup-plot-1}
-Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
-#Drinking_vs_family <- Drinking_vs_family |> 
- # as.numeric(GradePercent)
-#Drinking_vs_family <- Drinking_vs_family |>
- # as.numeric(FamGradePer.)
-```
-
 
 #### Final Plot 1
 
