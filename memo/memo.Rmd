@@ -54,7 +54,20 @@ ggsave("example-starwars-wide.png", width = 6, height = 4)
 These data cleaning sections are optional and depend on if you have some data cleaning steps specific to a particular plot
 
 ```{r data-cleanup-plot-1}
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+
+Drinking_vs_family <- drinking_vs_family |>
+  mutate(
+    Grade = fct_recode(Grade, 
+                       NULL = "")
+  )
+
 Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
+Drinking_vs_family <- Drinking_vs_family |> 
+  as.numeric(GradePercent)
+Drinking_vs_family <- Drinking_vs_family |>
+  as.numeric(FamGradePer.)
 ```
 
 
@@ -69,6 +82,7 @@ Drinking_vs_family |>
                                "Grade 12")) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
   ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
+  ylim(c()) +
   geom_col(na.rm = TRUE) +
   labs(x = NULL, 
        y = 'Percentage', 
@@ -113,7 +127,7 @@ Drinking_vs_family |>
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = NULL, 
        y = 'Percentage', 
-       title = 'Family support vs. being drunk or high at school by grade')+
+       title = 'Family support vs. being drunk or high at school by grade') +
   theme_classic()
 ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
