@@ -49,12 +49,16 @@ ggsave("example-starwars-wide.png", width = 6, height = 4)
 
 # WORK ON THISSSS!!!
 ```{r}
-#ggplot(kids_overweight, aes(x=Age, y=Percentage)) +
-#  geom_bar()
+kids_overweight |>
+  ggplot(aes(x=Age, y=Percentage)) +
+  geom_col() + 
+  labs(title = "Percentage of Kids Overweight by Age Group", 
+       x = "Age Group", 
+       y = "Percentage of Kids Overweight")
 
 ```
 
-```
+
 
 
 ### Plot 1: Grade vs. Drinking data
@@ -74,10 +78,10 @@ Drinking_vs_family <- drinking_vs_family |>
   )
 
 Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
-Drinking_vs_family <- Drinking_vs_family |> 
-  as.numeric(GradePercent)
-Drinking_vs_family <- Drinking_vs_family |>
-  as.numeric(FamGradePer.)
+#Drinking_vs_family <- Drinking_vs_family |> 
+ # as.numeric(GradePercent)
+#Drinking_vs_family <- Drinking_vs_family |>
+ # as.numeric(FamGradePer.)
 ```
 
 
@@ -92,7 +96,6 @@ Drinking_vs_family |>
                                "Grade 12")) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
   ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
-  ylim(c()) +
   geom_col(na.rm = TRUE) +
   labs(x = NULL, 
        y = 'Percentage', 
