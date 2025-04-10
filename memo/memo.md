@@ -60,17 +60,6 @@ kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
-kids_overweight |>
-  ggplot(aes(x=Age, y=Percentage)) +
-  geom_col() + 
-  labs(title = "Percentage of Kids Overweight by Age Group", 
-       x = "Age Group", 
-       y = "Percentage of Kids Overweight")
-```
-
-![](memo_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
-
-``` r
 kids_overweight <- kids_overweight |>
   mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"))
 
@@ -86,7 +75,7 @@ ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
     ## Warning in geom_histogram(stat = "count", fill = "skyblue", color = "black"):
     ## Ignoring unknown parameters: `binwidth`, `bins`, and `pad`
 
-![](memo_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](memo_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
@@ -95,55 +84,6 @@ family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
 ``` r
 view(family_support_data)
 ```
-
-``` r
-kids_overweight <- kids_overweight |>
-  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"),
-         source = "Overweight Data")
-
-family_support_data <- family_support_data |>
-  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"),
-         source = "Family Support Data")
-
-# Combine datasets
-combined_data <- bind_rows(kids_overweight, family_support_data)
-
-# Plot with clearer axis and spacing
-ggplot(combined_data, aes(x = Age, weight = Percentage, fill = source)) +
-  geom_histogram(stat = "count", position = position_dodge(width = 0.7), 
-                 width = 0.6, color = "black") +
-  labs(title = "Comparison: Overweight Kids vs Family Support by Age",
-       x = "Age",
-       y = "Percentage",
-       fill = "Dataset") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        text = element_text(size = 12),
-        legend.position = "top")
-```
-
-    ## Warning in geom_histogram(stat = "count", position = position_dodge(width =
-    ## 0.7), : Ignoring unknown parameters: `binwidth`, `bins`, and `pad`
-
-![](memo_files/figure-gfm/overweight%20kids%20vs%20family%20support-1.png)<!-- -->
-
-``` r
-ggplot(combined_data, aes(x = Age, y = Percentage, color = source)) +
-  geom_point(position = position_dodge(width = 0.5), size = 4) +
-  labs(title = "Comparison: Overweight Kids vs Family Support by Age",
-       x = "Age",
-       y = "Percentage",
-       color = "Dataset") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        text = element_text(size = 12),
-        legend.position = "top")
-```
-
-    ## Warning: Removed 12 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
-
-![](memo_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 data <- data.frame(
@@ -174,7 +114,7 @@ ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
 ```
 
-![](memo_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](memo_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 
     ### Plot 1: Grade vs. Drinking data
@@ -308,6 +248,6 @@ kids_overweight |>
   theme_classic()
 ```
 
-![](memo_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](memo_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Plot 4: \_\_\_\_\_\_\_\_\_\_\_
