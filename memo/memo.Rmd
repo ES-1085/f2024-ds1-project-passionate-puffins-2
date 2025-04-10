@@ -44,8 +44,20 @@ ggsave("example-starwars-wide.png", width = 6, height = 4)
 ```
 
 ```{r}
+
 kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
 ```
+
+
+```{r}
+kids_overweight |>
+  ggplot(aes(x=Age, y=Percentage)) +
+  geom_col() + 
+  labs(title = "Percentage of Kids Overweight by Age Group", 
+       x = "Age Group", 
+       y = "Percentage of Kids Overweight")
+```
+
 
 ```{r}
 kids_overweight <- kids_overweight |>
@@ -59,9 +71,11 @@ ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
        y = "Percentage of Overweight Kids") +
   theme_minimal()
 ```
+
 ```{r}
 family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
 ```
+
 
 ```{r}
 view(family_support_data)
@@ -105,6 +119,35 @@ ggplot(combined_data, aes(x = Age, y = Percentage, color = source)) +
         legend.position = "top")
 ```
 
+```{r}
+data <- data.frame(
+  Age = c("14 or younger", "15", "16", "17", "18 or older"),
+  Overweight = c(18.4, 21.2, 19.0, 17.6, 14.3),
+  FamilySupport = c(NA, NA, NA, NA, NA)  # Replace with actual values if available
+)
+
+# If you have FamilySupport values, add them here:
+# data$FamilySupport <- c(value1, value2, ..., value5)
+
+# Convert to long format
+data_long <- data %>%
+  pivot_longer(cols = c(Overweight, FamilySupport), 
+               names_to = "Category", values_to = "Percentage")
+
+# Plot
+ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
+  scale_fill_manual(values = c("Overweight" = "#66c2a5", "FamilySupport" = "#fc8d62")) +
+  labs(
+    title = "Comparison of Overweight Kids and Family Support by Age",
+    x = "Age Group",
+    y = "Percentage",
+    fill = "Category"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+```
+
 
 
 ```
@@ -116,7 +159,20 @@ ggplot(combined_data, aes(x = Age, y = Percentage, color = source)) +
 These data cleaning sections are optional and depend on if you have some data cleaning steps specific to a particular plot
 
 ```{r data-cleanup-plot-1}
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+
+Drinking_vs_family <- drinking_vs_family |>
+  mutate(
+    Grade = fct_recode(Grade, 
+                       NULL = "")
+  )
+
 Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
+#Drinking_vs_family <- Drinking_vs_family |> 
+ # as.numeric(GradePercent)
+#Drinking_vs_family <- Drinking_vs_family |>
+ # as.numeric(FamGradePer.)
 ```
 
 
@@ -175,14 +231,13 @@ Drinking_vs_family |>
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = NULL, 
        y = 'Percentage', 
-       title = 'Family support vs. being drunk or high at school by grade')+
+       title = 'Family support vs. being drunk or high at school by grade') +
   theme_classic()
 ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
 
 ### Plot 3: ___________
 
-Add more plot sections as needed. Each project should have at least 3 plots, but talk to me if you have fewer than 3.
 
 ### Plot 4: ___________ 
 
