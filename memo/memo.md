@@ -16,7 +16,9 @@ library(broom)
 
 ## Data Clean Up Steps for Overall Data
 
-### Step 1: \_\_\_\_\_\_\_\_\_
+### Step 1: Load and clean all data
+
+\<\<\<\<\<\<\< HEAD
 
 ### Step 2: \_\_\_\_\_\_\_\_
 
@@ -147,7 +149,7 @@ ggplot(combined_data, aes(x = Age, y = Percentage, color = source)) +
 data <- data.frame(
   Age = c("14 or younger", "15", "16", "17", "18 or older"),
   Overweight = c(18.4, 21.2, 19.0, 17.6, 14.3),
-  FamilySupport = c(NA, NA, NA, NA, NA)  # Replace with actual values if available
+  FamilySupport = c(79.80, 77.20, 81.80, 79.70, 76)  # Replace with actual values if available
 )
 
 # If you have FamilySupport values, add them here:
@@ -172,9 +174,6 @@ ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
 ```
 
-    ## Warning: Removed 5 rows containing missing values or values outside the scale range
-    ## (`geom_bar()`).
-
 ![](memo_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 
@@ -186,20 +185,36 @@ ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
 
 
     ``` r
-    family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
-    drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+    kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
 
-    Drinking_vs_family <- drinking_vs_family |>
-      mutate(
-        Grade = fct_recode(Grade, 
-                           NULL = "")
-      )
+    ## Rows: 5 Columns: 2
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Age
+    ## dbl (1): Percentage
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
-    Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
-    #Drinking_vs_family <- Drinking_vs_family |> 
-     # as.numeric(GradePercent)
-    #Drinking_vs_family <- Drinking_vs_family |>
-     # as.numeric(FamGradePer.)
+``` r
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+
+Drinking_vs_family <- drinking_vs_family |>
+  mutate(
+    Grade = fct_recode(Grade, 
+                       NULL = "")
+  )
+
+Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
+```
+
+### Step 2: Plot Specific Cleanup/Code for Visualizations
+
+## Plots
+
+### Plot 1: Grade vs. Drinking data
 
 #### Final Plot 1
 
@@ -209,10 +224,13 @@ mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
                                "Grade 10", 
                                "Grade 11", 
-                               "Grade 12")) |>
+                               "Grade 12"), 
+         GradePercent = as.numeric(gsub("%", "", GradePercent))) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
   ggplot(aes(x = Grade, y = `GradePercent`, fill = Grade)) +
   geom_col(na.rm = TRUE) +
+  scale_y_continuous(breaks = seq(0, 20, by = 5),
+                     labels = scales::label_percent(scale = 1)) + 
   labs(x = NULL, 
        y = 'Percentage', 
        title = 'How many times in the past year have you been drunk/high at school?', 
@@ -250,11 +268,20 @@ Drinking_vs_family |>
                                "Grade 10", 
                                "Grade 11", 
                                "Grade 12"), 
-         FamGradePer. = as.factor(FamGradePer.)
-         )|>
+         GradePercent = as.numeric(gsub("%", "", GradePercent)),
+         FamGradePer. = as.numeric(gsub("%", "", FamGradePer.))) |>
   filter(!is.na(Grade) & !is.na(`GradePercent`)) |>
-  ggplot(aes(x = Grade, y = `GradePercent`, fill = FamGradePer.)) +
+  pivot_longer(
+    cols = c(GradePercent, FamGradePer.),
+    names_to = "Metric",
+    values_to = "Percent") |>
+  mutate(Metric = recode(Metric,
+                       GradePercent = "Been Drunk/High at School",
+                       `FamGradePer.` = "Felt Supported by Family")) |>
+  ggplot(aes(x = Grade, y = `Percent`, fill = Metric)) +
   geom_bar(stat = "identity", position = "dodge") +
+  scale_y_continuous(breaks = seq(0, 100, by = 10),
+                     labels = scales::label_percent(scale = 1)) +
   labs(x = NULL, 
        y = 'Percentage', 
        title = 'Family support vs. being drunk or high at school by grade') +
@@ -267,6 +294,20 @@ Drinking_vs_family |>
 ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
 
-### Plot 3: \_\_\_\_\_\_\_\_\_\_\_
+### Plot 3: Percentage of overweight kids categorized by age
+
+``` r
+kids_overweight |>
+  ggplot(aes(x=Age, 
+             y=Percentage, 
+             fill = Age)) +
+  geom_col() + 
+  labs(title = "Percentage of Kids Overweight by Age Group", 
+       x = "Age", 
+       y = "Percentage of Kids Overweight") +
+  theme_classic()
+```
+
+![](memo_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ### Plot 4: \_\_\_\_\_\_\_\_\_\_\_
