@@ -58,7 +58,7 @@ kids_overweight <- kids_overweight |>
 
 # Plot histogram
 ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
-  geom_histogram(stat = "count", fill = "skyblue", color = "black") +
+  geom_histogram(stat = "count", fill = "orange", color = "black") +
   labs(title = "Overweight Kids by Age",
        x = "Age",
        y = "Percentage of Overweight Kids") +
