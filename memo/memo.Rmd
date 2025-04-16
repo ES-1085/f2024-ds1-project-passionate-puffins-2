@@ -80,15 +80,10 @@ data <- data.frame(
   FamilySupport = c(79.80, 77.20, 81.80, 79.70, 76)  # Replace with actual values if available
 )
 
-# If you have FamilySupport values, add them here:
-# data$FamilySupport <- c(value1, value2, ..., value5)
-
-# Convert to long format
 data_long <- data %>%
   pivot_longer(cols = c(Overweight, FamilySupport), 
                names_to = "Category", values_to = "Percentage")
 
-# Plot
 ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
   scale_fill_manual(values = c("Overweight" = "#66c2a5", "FamilySupport" = "#fc8d62")) +
@@ -103,10 +98,6 @@ ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
 ```
 
 
-
-```
-
->>>>>>> 348a592c1e70188b941e9409ad35057b9cab6330
 ### Plot 1: Grade vs. Drinking data
 
 #### Data cleanup steps specific to plot 1
