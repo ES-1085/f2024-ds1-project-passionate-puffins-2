@@ -27,31 +27,34 @@ Research Question: How big a role do home support systems play in the health of 
 Drinking_data <- read_xlsx("../data/How many times in the past year (12 months) have you been drunk or high at school? (hn126) Percentage of students who answered at least 1 time.xlsx")
 #I don't have access to this data file to rename it. (Katie)
 
-family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+family_support_data <- read.csv("/cloud/project/data/love_support_family.csv")
 
 Drinking_vs_family <- full_join(Drinking_data, 
                               family_support_data, 
                               by = "Grade")
 
+
 ```
 
+```{r rename-variable}
+Drinking_data <- Drinking_data |>
+  rename("Percent Total Age" = "Percent Total Ague")
 
-```{r rename-varaible}
-
-#Drinking_data <- Drinking_data |>
- # rename("Percent Total Ague" = "Percent Total Age")
-         
 ```
+
 
 ```{r View-Data }
-view (Drinking_vs_family)
-view (Drinking_data)
+view(family_support_data)
+view(Drinking_data)
+
 ```
 
 ```{r Glimpse-of-The-Data}
 glimpse(Drinking_data)
+glimpse(family_support_data)
 glimpse(Drinking_vs_family)
 ```
+
 ```{r}
 dim(Drinking_data) 
 dim(Drinking_vs_family)
@@ -90,5 +93,5 @@ Drinking_data |>
 
 ## 4. Data Ethics Review
 
-The data ethics review section will be introduced in a separate class and is not part of the original proposal deadline.
+
 
