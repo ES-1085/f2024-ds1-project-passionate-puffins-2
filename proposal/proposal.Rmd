@@ -166,7 +166,7 @@ plot_df <- drunk_smoke_meals_data %>%
 ggplot(plot_df, aes(x = Age, y = Count, fill = Category)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
-    title = "Students Drunk or High In School VS 7 Family Meals By Gender",
+    title = "Students Drunk or High In School VS 7 Family Meals Per Week By Gender",
     x = "Age",
     y = "Number of Students",
     fill = "Category"
@@ -214,7 +214,7 @@ ggplot(bar_df, aes(x = Age, y = Count, fill = Type)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~ Gender) +
   labs(
-    title = "Comparison of Smoking and Family Meals by Age and Gender",
+    title = "Being Around Smoking VS 7 Family Meals Per Week By Age And Gender",
     x = "Age Group",
     y = "Number of Students",
     fill = "Behavior"
