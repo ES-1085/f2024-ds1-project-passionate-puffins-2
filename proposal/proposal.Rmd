@@ -15,7 +15,7 @@ library(readxl)
 
 ## 1. Introduction
 
-Our data comes from all High Schools in the Androscoggin Area (this will be updated for specificity once we have specific school names). They surveyed their students about drug use, alcohol consumption, smoking habits, eating habits, home lives, and how much support they felt they were recieving from their parents. We will be using this data to evaluate the health of students at Androscoggin County High school compared to how much support they feel they are recieving from their parents. We would also like to compare the differences in support and unhealthy behavior between gender (i.e.: are female students more likely to smoke/drink/do drugs if they have low familial support than male students?). 
+Our data comes from all High Schools in the Androscoggin Area (this will be updated for specificity once we have specific school names). They surveyed their students about drug use, alcohol consumption, smoking habits, eating habits, home lives, and how much support they felt they were receiving from their parents. We will be using this data to evaluate the health of students at Androscoggin County High school compared to how much support they feel they are recieving from their parents. We would also like to compare the differences in support and unhealthy behavior between gender (i.e.: are female students more likely to smoke/drink/do drugs if they have low familial support than male students?). 
 
 In a study by the NIH (https://pmc.ncbi.nlm.nih.gov/articles/PMC8656923/), the association between parental support and the rate of smoking in youth was found to be positive. It will be interesting to compare these results to our findings about the relationship between support and unhealthy behavior. 
 

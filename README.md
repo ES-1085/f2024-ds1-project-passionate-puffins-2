@@ -1,6 +1,6 @@
 Project title
 ================
-by Team name
+by Passionate Puffins 2 (Aidan, Mary, and Katie)
 
 ## Summary
 
