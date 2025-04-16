@@ -244,5 +244,118 @@ ggplot(data_long, aes(x = , y = Percentage, fill = Category)) +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
 ```
 
+```{r}
+#install.packages("janitor")
+library(readxl)
+library(tidyverse)
+library(janitor)
 
+# Clean column names first
+final_data_clean <- final_data %>%
+  clean_names()
+
+# Now select and reshape the cleaned data
+plot_df <- final_data_clean %>%
+  select(age = age_x,
+         male_drunk_high = male_drunk_high_in_school_1_time,
+         female_drunk_high = female_drunk_high_in_school_1_time,
+         male_meals = males_7_meals_a_week,
+         female_meals = female_7_meals_a_week) %>%
+  drop_na() %>%
+  pivot_longer(cols = -age, names_to = "category", values_to = "count") %>%
+  mutate(
+    type = if_else(str_detect(category, "drunk_high"), "Drunk High", "7 Meals"),
+    gender = if_else(str_detect(category, "male"), "Male", "Female")
+  )
+
+# Plot the result
+ggplot(plot_df, aes(x = age, y = count, fill = interaction(type, gender))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Comparison of 'Drunk High in School (1 time)' and '7 Meals a Week' by Gender",
+       x = "Age Group",
+       y = "Number of Students",
+       fill = "Type and Gender") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+```{r Students Drunk or High In School VS 7 Family Meals per week By Gender}
+library(tidyverse)
+
+plot_df <- drunk_smoke_meals_data %>%
+  select(
+    Age = `Age.x`,
+    Male_Drunk_High = `Male Drunk High in school 1 time`,
+    Female_Drunk_High = `Female Drunk High in school 1 time`,
+    Male_Meals = `Males 7 meals a week`,
+    Female_Meals = `Female 7 meals a week`
+  ) %>%
+  drop_na() %>%
+  mutate(Age = factor(Age, levels = c("<=14", "15.0", "16.0", "17.0", ">=18"))) %>%
+  pivot_longer(
+    cols = -Age,
+    names_to = "Category",
+    values_to = "Count"
+  )
+
+ggplot(plot_df, aes(x = Age, y = Count, fill = Category)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Students Drunk or High In School VS 7 Family Meals Per Week By Gender",
+    x = "Age",
+    y = "Number of Students",
+    fill = "Category"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+```{r}
+colnames(drunk_smoke_meals_data)
+```
+
+
+
+```{r family-meals-thing}
+library(tidyverse)
+
+bar_df <- drunk_smoke_meals_data %>%
+  select(
+    Age = `Age.x`,
+    Male_Smoking = `Males 7 days in room atleat 1 cig`,
+    Female_Smoking = `Female 7 days in room atleat 1 cig`,
+    Male_Meals = `Males 7 meals a week`,
+    Female_Meals = `Female 7 meals a week`
+  ) %>%
+  drop_na() %>%
+  pivot_longer(cols = -Age, names_to = "Category", values_to = "Count") %>%
+  mutate(
+    Gender = case_when(
+      str_detect(Category, "Male") ~ "Male",
+      str_detect(Category, "Female") ~ "Female"
+    ),
+    Type = case_when(
+      str_detect(Category, "Smoking") ~ "Smoking",
+      str_detect(Category, "Meals") ~ "7 Meals"
+    ),
+    Age = factor(Age, levels = c("<=14", "15.0", "16.0", "17.0", ">=18"))
+  )
+
+ggplot(bar_df, aes(x = Age, y = Count, fill = Type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Gender) +
+  labs(
+    title = "Being Around Smoking VS 7 Family Meals Per Week By Age And Gender",
+    x = "Age Group",
+    y = "Number of Students",
+    fill = "Behavior"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
 
