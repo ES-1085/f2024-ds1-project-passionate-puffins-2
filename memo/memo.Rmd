@@ -86,7 +86,7 @@ data_long <- data %>%
 
 ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
-  scale_fill_manual(values = c("Overweight" = "#66c2a5", "FamilySupport" = "#fc8d62")) +
+    scale_color_viridis_d() +  
   labs(
     title = "Comparison of Overweight Kids and Family Support by Age",
     x = "Age Group",
@@ -191,7 +191,7 @@ Drinking_vs_family |>
                        GradePercent = "Been Drunk/High at School",
                        `FamGradePer.` = "Felt Supported by Family")) |>
   ggplot(aes(x = Grade, y = `Percent`, fill = Metric)) +
-  geom_bar(stat = "identity", position = "dodge") +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
   scale_y_continuous(breaks = seq(0, 100, by = 10),
                      labels = scales::label_percent(scale = 1)) +
   labs(x = NULL, 
@@ -214,6 +214,8 @@ ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
        x = "Age",
        y = "Percentage of Overweight Kids") +
   theme_minimal()
+
+ggsave("../plots/plot-3.jpg", width = 10, height = 4)
 ```
 
 ### Plot 4: Percentage of Kids Overweight by Age 
@@ -225,24 +227,26 @@ data <- data.frame(
   FamilySupport = c(79.80, 77.20, 81.80, 79.70, 76)
 )
 
-# Convert to long format
-data_long <- data %>%
+overweight_support_long <- data |>
   pivot_longer(cols = c(Overweight, FamilySupport), 
                names_to = "Category", values_to = "Percentage")
 
-# Plot
-ggplot(data_long, aes(x = , y = Percentage, fill = Category)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
-  scale_fill_manual(values = c("Overweight" = "#66c2a5", "FamilySupport" = "#fc8d62")) +
+overweight_support_long |>
+  ggplot(aes(x = Age, y = Percentage, fill = Category)) +
+    geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
+      scale_colour_viridis_d() +    
   labs(
-    title = "Comparison of Overweight Kids and Family Support by Age",
-    x = "Age Group",
-    y = "Percentage",
-    fill = "Category"
-  ) +
+      title = "Comparison of Overweight Kids and Family Support by Age",
+      x = "Age Group",
+      y = "Percentage",
+      fill = "Category"
+        ) +
   theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+
+ggsave("../plots/plot-4.jpg", width = 14, height = 10)
 ```
+
 
 ```{r}
 drunk_smoke_meals_data <- read_xlsx("../data/Drunk_High and smoking and family meals data .xlsx")
@@ -253,25 +257,26 @@ final_data <- full_join(Drinking_vs_family,
  
 ```
 
+### Plot 5 cleanup 
+
 ```{r}
 
-final_data_clean <- final_data %>%
+final_data_clean <- final_data |>
   clean_names()
 
-plot_df <- final_data_clean %>%
+plot_df <- final_data_clean |>
   select(age = age_x,
          male_drunk_high = male_drunk_high_in_school_1_time,
          female_drunk_high = female_drunk_high_in_school_1_time,
          male_meals = males_7_meals_a_week,
-         female_meals = female_7_meals_a_week) %>%
+         female_meals = female_7_meals_a_week) |>
   drop_na() %>%
-  pivot_longer(cols = -age, names_to = "category", values_to = "count") %>%
+  pivot_longer(cols = -age, names_to = "category", values_to = "count") |>
   mutate(
     type = if_else(str_detect(category, "drunk_high"), "Drunk High", "7 Meals"),
     gender = if_else(str_detect(category, "male"), "Male", "Female")
   )
 
-# Plot the result
 ggplot(plot_df, aes(x = age, y = count, fill = interaction(type, gender))) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(title = "Comparison of 'Drunk High in School (1 time)' and '7 Meals a Week' by Gender",
@@ -281,28 +286,33 @@ ggplot(plot_df, aes(x = age, y = count, fill = interaction(type, gender))) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+ggsave("../plots/plot-5.jpg", width = 10, height = 4)
 ```
 
-```{r Students Drunk or High In School VS 7 Family Meals per week By Gender}
-library(tidyverse)
 
-plot_df <- drunk_smoke_meals_data %>%
+### Plot 5:  
+
+```{r}
+drunk_smoke_meals_data <- drunk_smoke_meals_data |>
   select(
-    Age = `Age.x`,
-    Male_Drunk_High = `Male Drunk High in school 1 time`,
-    Female_Drunk_High = `Female Drunk High in school 1 time`,
-    Male_Meals = `Males 7 meals a week`,
-    Female_Meals = `Female 7 meals a week`
-  ) %>%
-  drop_na() %>%
-  mutate(Age = factor(Age, levels = c("<=14", "15.0", "16.0", "17.0", ">=18"))) %>%
+    Age = `Age.x`
+    #Male_Drunk_High = `Male Drunk High in school 1 time`,
+    #Female_Drunk_High = `Female Drunk High in school 1 time`,
+    #Male_Meals = `Males 7 meals a week`,
+    #Female_Meals = `Female 7 meals a week`
+  ) |>
+  drop_na() |>
+  mutate(Age = factor(Age, levels = c("14 and younger", "15.0", "16.0", "17.0", "18 and older"))) |>
   pivot_longer(
-    cols = -Age,
+    cols = Age,
     names_to = "Category",
     values_to = "Count"
   )
 
-ggplot(plot_df, aes(x = Age, y = Count, fill = Category)) +
+```
+
+```{r}
+ggplot(drunk_smoke_meals_data, aes(x = Category, y = Count, fill = Category)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
     title = "Students Drunk or High In School VS 7 Family Meals Per Week By Gender",
@@ -332,9 +342,9 @@ bar_df <- drunk_smoke_meals_data %>%
     Female_Smoking = `Female 7 days in room atleat 1 cig`,
     Male_Meals = `Males 7 meals a week`,
     Female_Meals = `Female 7 meals a week`
-  ) %>%
-  drop_na() %>%
-  pivot_longer(cols = -Age, names_to = "Category", values_to = "Count") %>%
+  ) |>
+  drop_na() |>
+  pivot_longer(cols = -Age, names_to = "Category", values_to = "Count") |>
   mutate(
     Gender = case_when(
       str_detect(Category, "Male") ~ "Male",
@@ -358,7 +368,5 @@ ggplot(bar_df, aes(x = Age, y = Count, fill = Type)) +
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
 ```
 
