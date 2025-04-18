@@ -24,20 +24,23 @@ Moving forward, we hope this research can be shared with school counselors, comm
 
 ## Handout
 
-Our presentation can be found [here](handout/handout.pdf). You can update the filename and extension of your handout.
+Our presentation can be found at https://www.canva.com/design/DAGkYwLU05o/QEZyYSw4raE8m7UvJ2ZXOA/edit?utm_content=DAGkYwLU05o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton.
 
 ## Memo
 
-A link to the code and how we created our graphics in our memo can be found [here](memo/memo.html).
+A link to the code and how we created our graphics in our memo can be found at https://3e06a9cd903344d6ba052db94c7e0716.app.posit.cloud/?view=rmarkdown.
 
 ## Data
 
 Include a citation for your data here. See
 <http://libraryguides.vu.edu.au/c.php?g=386501&p=4347840> for guidance
 on proper citation for datasets. If you got your data off the web, make
-sure to note the retrieval date.
+sure to note the retrieval date. [I could not access the link above, so I'm going off of this source: https://guides.lib.umich.edu/c.php?g=282964&p=3285995#:~:text=Author%2C%20Title%20of%20dataset%20(Place,Year)%2C%20URL%2FDOI.]
+
+Maine Integrated Youth Health Survey. DETAILED REPORTS - COMPARISONS BY GENDER, AGE, GRADE, AND RACE/ETHNICITY ANDROSCOGGIN COUNTY 2015 MIYHS HIGH SCHOOL REPORT. Androscoggin County, Maine: Maine Department of Health and Human Services, Main Department of Education, 2015. https://docs.google.com/spreadsheets/d/11IVpHAw2-u3rbwqp7ks_oVgjaqBgACFg/edit?usp=sharing&ouid=100344212506323163599&rtpof=true&sd=true. 
 
 ## References
 
-List any references here. You should, at a minimum, list your data
-source.
+Maine Integrated Youth Health Survey. DETAILED REPORTS - COMPARISONS BY GENDER, AGE, GRADE, AND RACE/ETHNICITY ANDROSCOGGIN COUNTY 2015 MIYHS HIGH SCHOOL REPORT. Androscoggin County, Maine: Maine Department of Health and Human Services, Main Department of Education, 2015. https://docs.google.com/spreadsheets/d/11IVpHAw2-u3rbwqp7ks_oVgjaqBgACFg/edit?usp=sharing&ouid=100344212506323163599&rtpof=true&sd=true.
+
+Zaborskis, Apolinaras, Aistė Kavaliauskienė, Charli Eriksson, Ellen Klemera, Elitsa Dimitrova, Marina Melkumova, and Daniela Husarova. 2021. “Family Support as Smoking Prevention during Transition from Early to Late Adolescence: A Study in 42 Countries.” International Journal of Environmental Research and Public Health 18 (23): 12739. https://doi.org/10.3390/ijerph182312739.

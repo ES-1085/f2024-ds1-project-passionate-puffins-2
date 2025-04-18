@@ -9,46 +9,25 @@ This document should contain a detailed account of the data clean up for your da
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
-
 ```
 
 ## Data Clean Up Steps for Overall Data
 
-### Step 1: Load and clean all data
+### Step 1: Load all data
 
-<<<<<<< HEAD
+```{r}
+family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
+kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
+drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
+drunk_smoke_meals_data <- read_xlsx("../data/Drunk_High and smoking and family meals data .xlsx")
+```
 
-### Step 2: ________
 
 ## Plots
 
-### ggsave example for saving plots
+## Plot 1: Overweight kids by age
 
-```{r starwars ggsave example}
-p1 <- starwars |>
-  filter(mass < 1000, 
-         species %in% c("Human", "Cerean", "Pau'an", "Droid", "Gungan")) |>
-  ggplot() +
-  geom_point(aes(x = mass, 
-                 y = height, 
-                 color = species)) +
-  labs(x = "Weight (kg)", 
-       y = "Height (m)",
-       color = "Species",
-       title = "Weight and Height of Select Starwars Species",
-       caption = paste("This data comes from the starwars api: https://swapi.py43.com"))
-
-
-ggsave("example-starwars.png", width = 4, height = 4)
-
-ggsave("example-starwars-wide.png", width = 6, height = 4)
-```
-
-```{r}
-kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
-```
-
-```{r}
+```{r overweight-count-age fig.alt = “Bar chart of the percentage of overweight kids in Androscoggin school systems by age where 15 is the highest percentage at about 22 percent, and 18 or older is the lowest percentage at about 14 percent.”}
 kids_overweight <- kids_overweight |>
   mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"))
 
@@ -61,26 +40,16 @@ ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
   theme_minimal()
 ```
 
-```{r}
-family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
-```
+## Plot 1: Overweight kids vs family support by age
 
-
-```{r}
-view(family_support_data)
-```
-
-
-
-
-```{r}
+```{r overweight-kids-family-support fig.alt = “Bar chart comparing the percentage of overweight kids in Androscoggin school systems to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by age. Age 15 is the highest percentage of overweight kids at about 22 percent, and 18 or older is the lowest percentage at about 14 percent; however, age 16 has the highest percentage of kids who feel supported by their parents at about 81 percent, and age 18 or older has the lowest percentage with about 77 percent.”}
 data <- data.frame(
   Age = c("14 or younger", "15", "16", "17", "18 or older"),
   Overweight = c(18.4, 21.2, 19.0, 17.6, 14.3),
   FamilySupport = c(79.80, 77.20, 81.80, 79.70, 76)  # Replace with actual values if available
 )
 
-data_long <- data %>%
+data_long <- data |>
   pivot_longer(cols = c(Overweight, FamilySupport), 
                names_to = "Category", values_to = "Percentage")
 
@@ -98,19 +67,11 @@ ggplot(data_long, aes(x = Age, y = Percentage, fill = Category)) +
 ```
 
 
-### Plot 1: Grade vs. Drinking data
-
-#### Data cleanup steps specific to plot 1
+### Plot 3 Cleanup
 
 These data cleaning sections are optional and depend on if you have some data cleaning steps specific to plot 1
 
 ```{r data-cleanup-plot-1}
-
-kids_overweight <- read_csv("/cloud/project/data/kids_overweight.csv")
-
-family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
-
-drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
 
 Drinking_vs_family <- drinking_vs_family |>
   mutate(
@@ -123,15 +84,10 @@ Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 
 ```
 
-### Step 2: Plot Specific Cleanup/Code for Visualizations
 
-## Plots
+## Plot 3: Drinking perentage by grade
 
-### Plot 1: Grade vs. Drinking data
-
-#### Final Plot 1
-
-```{r plot-1-visualization}
+```{r drinking-percentage-grade fig.alt = “Bar chart of the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year by grade, where grade 11 is the highest percentage with about 14 percent, and grade 9 is the lowest with about 11 percent.”}
 Drinking_vs_family |>
 mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
@@ -153,27 +109,9 @@ mutate('Grade' = fct_relevel(Grade,
 ggsave("../plots/plot-1.jpg", width = 10, height = 4)
 ```
 
+## Plot 4: Drinking vs. family
 
-### Plot 2: Family support at home vs. Drinking Data
-
-#### Plot 2 Cleanup
-
-```{r}
-
-family_support_data <- read.csv ("/cloud/project/data/love_support_family.csv")
-drinking_vs_family <- read.csv ("/cloud/project/data/drinking_fam_GRADE.csv")
-
-Drinking_vs_family <- drinking_vs_family |>
-  mutate(
-    Grade = fct_recode(Grade, 
-                       NULL = "")
-  )
-```
-
-
-#### Final Plot 2
-
-```{r plot-2-visualization}
+```{r drinking-vs-family fig.alt = “Bar chart comparing the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by grade. Grade 11 is the highest percentage of kids who said they'd been drunk or high at about 14 percent, and grade 9 is the lowest percentage at about 11 percent; however, grade 11 has the highest percentage of kids who feel supported by their parents with about 81 percent, and grade 10 has the lowest percentage with about 79 percent.”}
 Drinking_vs_family |>
   mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
@@ -202,82 +140,29 @@ Drinking_vs_family |>
 ggsave("../plots/plot-2.jpg", width = 10, height = 4)
 ```
 
-### Plot 3: Percentage of overweight kids categorized by age
 
-```{r}
-kids_overweight <- kids_overweight |>
-  mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"))
+### Plot 5: Drinking count vs. meals vs. gender by age
+We chose to include this plot in the memo but not in the final project because while it shows a lot of data relatively concisely, it could cause some confusion because of the number of variables in the graph. Also, it doesn't reflect female findings and only uses the male data. We did not include alt text for this graph, as it will not be presented anywhere because it's incomplete and ultimately not useful. 
 
-ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
-  geom_histogram(stat = "count", fill = "skyblue", color = "black") +
-  labs(title = "Overweight Kids by Age",
-       x = "Age",
-       y = "Percentage of Overweight Kids") +
-  theme_minimal()
+```{r drinking-gender-age-meals}
 
-ggsave("../plots/plot-3.jpg", width = 10, height = 4)
-```
-
-### Plot 4: Percentage of Kids Overweight by Age 
-
-```{r}
-data <- data.frame(
-  Age = c("14 or younger", "15", "16", "17", "18 or older"),
-  Overweight = c(18.4, 21.2, 19.0, 17.6, 14.3),
-  FamilySupport = c(79.80, 77.20, 81.80, 79.70, 76)
-)
-
-overweight_support_long <- data |>
-  pivot_longer(cols = c(Overweight, FamilySupport), 
-               names_to = "Category", values_to = "Percentage")
-
-overweight_support_long |>
-  ggplot(aes(x = Age, y = Percentage, fill = Category)) +
-    geom_bar(stat = "identity", position = position_dodge(width = 0.7), width = 0.6) +
-      scale_colour_viridis_d() +    
-  labs(
-      title = "Comparison of Overweight Kids and Family Support by Age",
-      x = "Age Group",
-      y = "Percentage",
-      fill = "Category"
-        ) +
-  theme_minimal(base_size = 14) +
-  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
-
-ggsave("../plots/plot-4.jpg", width = 14, height = 10)
-```
-
-
-```{r}
-drunk_smoke_meals_data <- read_xlsx("../data/Drunk_High and smoking and family meals data .xlsx")
-
-final_data <- full_join(Drinking_vs_family, 
-                        drunk_smoke_meals_data,
-                        by = "Age.x")
- 
-```
-
-### Plot 5 cleanup 
-
-```{r}
-
-final_data_clean <- final_data |>
+final_data_clean <- drunk_smoke_meals_data |>
   clean_names()
 
-plot_df <- final_data_clean |>
+final_data <- final_data_clean |>
   select(age = age_x,
          male_drunk_high = male_drunk_high_in_school_1_time,
          female_drunk_high = female_drunk_high_in_school_1_time,
          male_meals = males_7_meals_a_week,
          female_meals = female_7_meals_a_week) |>
-  drop_na() %>%
+  drop_na() |>
   pivot_longer(cols = -age, names_to = "category", values_to = "count") |>
   mutate(
     type = if_else(str_detect(category, "drunk_high"), "Drunk High", "7 Meals"),
     gender = if_else(str_detect(category, "male"), "Male", "Female")
   )
 
-ggplot(plot_df, aes(x = age, y = count, fill = interaction(type, gender))) +
+ggplot(final_data, aes(x = age, y = count, fill = interaction(type, gender))) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(title = "Comparison of 'Drunk High in School (1 time)' and '7 Meals a Week' by Gender",
        x = "Age Group",
@@ -290,52 +175,31 @@ ggsave("../plots/plot-5.jpg", width = 10, height = 4)
 ```
 
 
-### Plot 5:  
+### Plot 6: Drinking vs. gender vs. meals
 
-```{r}
-drunk_smoke_meals_data <- drunk_smoke_meals_data |>
-  select(
-    Age = `Age.x`
-    #Male_Drunk_High = `Male Drunk High in school 1 time`,
-    #Female_Drunk_High = `Female Drunk High in school 1 time`,
-    #Male_Meals = `Males 7 meals a week`,
-    #Female_Meals = `Female 7 meals a week`
-  ) |>
-  drop_na() |>
-  mutate(Age = factor(Age, levels = c("14 and younger", "15.0", "16.0", "17.0", "18 and older"))) |>
-  pivot_longer(
-    cols = Age,
-    names_to = "Category",
-    values_to = "Count"
-  )
+We chose to include this plot in the memo for the same reason as plot 5. We did not include alt text for this graph, as it also will not be presented anywhere because it's incomplete and ultimately not useful. 
 
-```
-
-```{r}
-ggplot(drunk_smoke_meals_data, aes(x = Category, y = Count, fill = Category)) +
+```{r drinking-gender-meals}
+ggplot(final_data, aes(x = category, y = count, fill = category)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
     title = "Students Drunk or High In School VS 7 Family Meals Per Week By Gender",
-    x = "Age",
+    x = "Type",
     y = "Number of Students",
     fill = "Category"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("../plots/plot-6.jpg", width = 10, height = 4)
 ```
 
 
+### Plot 7: Smoking vs. meals vs. age faceted by gender
 
-```{r}
-colnames(drunk_smoke_meals_data)
-```
+```{r final-plot-seven fig.alt = “Bar chart comparing the number of kids in Androscoggin county school systems who said that they had been in the same room as someone who was smoking to the number of kids in Androscoggin school systems who have at least 7 meals with their families a week categorized by age and faceted by gender. For females, age 15 is the highest number of kids who said they'd been in the same room as someone smoking with about 301 kids, and age 18 or older is the lowest number with about 65 kids; however, age 15 also has the highest number of kids who have 7 family meals a week with about 290 kids, and age 18 or older has the lowest number with about 52 kids. For males, age 17 is the highest number of kids who said they'd been in the same room as someone smoking with about 200 kids, and age 14 or lower is the lowest number with about 95 kids; however, age 15 has the highest number of kids who have 7 family meals a week with about 225 kids, and age 18 or older has the lowest number with about 50 kids.”}
 
-
-
-```{r family-meals-thing}
-library(tidyverse)
-
-bar_df <- drunk_smoke_meals_data %>%
+smoke_final <- drunk_smoke_meals_data |>
   select(
     Age = `Age.x`,
     Male_Smoking = `Males 7 days in room atleat 1 cig`,
@@ -357,16 +221,18 @@ bar_df <- drunk_smoke_meals_data %>%
     Age = factor(Age, levels = c("<=14", "15.0", "16.0", "17.0", ">=18"))
   )
 
-ggplot(bar_df, aes(x = Age, y = Count, fill = Type)) +
+ggplot(smoke_final, aes(x = Age, y = Count, fill = Type)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~ Gender) +
   labs(
-    title = "Being Around Smoking VS 7 Family Meals Per Week By Age And Gender",
+    title = "Smoking VS 7 Family Meals/Week By Age and Gender",
     x = "Age Group",
     y = "Number of Students",
     fill = "Behavior"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("../plots/plot-7.jpg", width = 6, height = 4)
 ```
 
