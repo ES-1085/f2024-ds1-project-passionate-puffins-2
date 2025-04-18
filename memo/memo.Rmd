@@ -1,14 +1,17 @@
 ---
 title: "Project memo"
 author: "Team name"
-output: github_document
+output: html_document
 ---
 
 This document should contain a detailed account of the data clean up for your data and the design choices you are making for your plots. For instance you will want to document choices you've made that were intentional for your graphic, e.g. color you've chosen for the plot. Think of this document as a code script someone can follow to reproduce the data cleaning steps and graphics in your handout.
 
 ```{r load-packages, message = FALSE}
+#install.packages("readxl")
 library(tidyverse)
 library(broom)
+library(readxl)
+library(janitor)
 ```
 
 ## Data Clean Up Steps for Overall Data
@@ -27,7 +30,7 @@ drunk_smoke_meals_data <- read_xlsx("../data/Drunk_High and smoking and family m
 
 ## Plot 1: Overweight kids by age
 
-```{r overweight-count-age fig.alt = “Bar chart of the percentage of overweight kids in Androscoggin school systems by age where 15 is the highest percentage at about 22 percent, and 18 or older is the lowest percentage at about 14 percent.”}
+```{r overweight-count-age, fig.alt = "Bar chart of the percentage of overweight kids in Androscoggin school systems by age where 15 is the highest percentage at about 22 percent, and 18 or older is the lowest percentage at about 14 percent."}
 kids_overweight <- kids_overweight |>
   mutate(Age = fct_relevel(Age, "14 or younger", "15", "16", "17"))
 
@@ -42,7 +45,7 @@ ggplot(kids_overweight, aes(x = Age, weight = Percentage)) +
 
 ## Plot 1: Overweight kids vs family support by age
 
-```{r overweight-kids-family-support fig.alt = “Bar chart comparing the percentage of overweight kids in Androscoggin school systems to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by age. Age 15 is the highest percentage of overweight kids at about 22 percent, and 18 or older is the lowest percentage at about 14 percent; however, age 16 has the highest percentage of kids who feel supported by their parents at about 81 percent, and age 18 or older has the lowest percentage with about 77 percent.”}
+```{r overweight-kids-family-support, fig.alt = "Bar chart comparing the percentage of overweight kids in Androscoggin school systems to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by age. Age 15 is the highest percentage of overweight kids at about 22 percent, and 18 or older is the lowest percentage at about 14 percent; however, age 16 has the highest percentage of kids who feel supported by their parents at about 81 percent, and age 18 or older has the lowest percentage with about 77 percent."}
 data <- data.frame(
   Age = c("14 or younger", "15", "16", "17", "18 or older"),
   Overweight = c(18.4, 21.2, 19.0, 17.6, 14.3),
@@ -87,7 +90,7 @@ Drinking_data_cleaner <- read.csv("../data/drunk_high_data_2.csv")
 
 ## Plot 3: Drinking perentage by grade
 
-```{r drinking-percentage-grade fig.alt = “Bar chart of the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year by grade, where grade 11 is the highest percentage with about 14 percent, and grade 9 is the lowest with about 11 percent.”}
+```{r drinking-percentage-grade, fig.alt = "Bar chart of the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year by grade, where grade 11 is the highest percentage with about 14 percent, and grade 9 is the lowest with about 11 percent."}
 Drinking_vs_family |>
 mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
@@ -111,7 +114,7 @@ ggsave("../plots/plot-1.jpg", width = 10, height = 4)
 
 ## Plot 4: Drinking vs. family
 
-```{r drinking-vs-family fig.alt = “Bar chart comparing the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by grade. Grade 11 is the highest percentage of kids who said they'd been drunk or high at about 14 percent, and grade 9 is the lowest percentage at about 11 percent; however, grade 11 has the highest percentage of kids who feel supported by their parents with about 81 percent, and grade 10 has the lowest percentage with about 79 percent.”}
+```{r drinking-vs-family, fig.alt = "Bar chart comparing the percentage of kids in Androscoggin county school systems who said that they had been drunk or high at school at least once in the past year to the percentage of kids in Androscoggin school systems who said they feel supported by their families categorized by grade. Grade 11 is the highest percentage of kids who said they'd been drunk or high at about 14 percent, and grade 9 is the lowest percentage at about 11 percent; however, grade 11 has the highest percentage of kids who feel supported by their parents with about 81 percent, and grade 10 has the lowest percentage with about 79 percent."}
 Drinking_vs_family |>
   mutate('Grade' = fct_relevel(Grade,
                                "Grade 9", 
@@ -197,7 +200,7 @@ ggsave("../plots/plot-6.jpg", width = 10, height = 4)
 
 ### Plot 7: Smoking vs. meals vs. age faceted by gender
 
-```{r final-plot-seven fig.alt = “Bar chart comparing the number of kids in Androscoggin county school systems who said that they had been in the same room as someone who was smoking to the number of kids in Androscoggin school systems who have at least 7 meals with their families a week categorized by age and faceted by gender. For females, age 15 is the highest number of kids who said they'd been in the same room as someone smoking with about 301 kids, and age 18 or older is the lowest number with about 65 kids; however, age 15 also has the highest number of kids who have 7 family meals a week with about 290 kids, and age 18 or older has the lowest number with about 52 kids. For males, age 17 is the highest number of kids who said they'd been in the same room as someone smoking with about 200 kids, and age 14 or lower is the lowest number with about 95 kids; however, age 15 has the highest number of kids who have 7 family meals a week with about 225 kids, and age 18 or older has the lowest number with about 50 kids.”}
+```{r final-plot-seven, fig.alt = "Bar chart comparing the number of kids in Androscoggin county school systems who said that they had been in the same room as someone who was smoking to the number of kids in Androscoggin school systems who have at least 7 meals with their families a week categorized by age and faceted by gender. For females, age 15 is the highest number of kids who said they'd been in the same room as someone smoking with about 301 kids, and age 18 or older is the lowest number with about 65 kids; however, age 15 also has the highest number of kids who have 7 family meals a week with about 290 kids, and age 18 or older has the lowest number with about 52 kids. For males, age 17 is the highest number of kids who said they'd been in the same room as someone smoking with about 200 kids, and age 14 or lower is the lowest number with about 95 kids; however, age 15 has the highest number of kids who have 7 family meals a week with about 225 kids, and age 18 or older has the lowest number with about 50 kids."}
 
 smoke_final <- drunk_smoke_meals_data |>
   select(
