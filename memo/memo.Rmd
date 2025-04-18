@@ -245,16 +245,19 @@ ggplot(data_long, aes(x = , y = Percentage, fill = Category)) +
 ```
 
 ```{r}
-#install.packages("janitor")
-library(readxl)
-library(tidyverse)
-library(janitor)
+drunk_smoke_meals_data <- read_xlsx("../data/Drunk_High and smoking and family meals data .xlsx")
 
-# Clean column names first
+final_data <- full_join(Drinking_vs_family, 
+                        drunk_smoke_meals_data,
+                        by = "Age.x")
+ 
+```
+
+```{r}
+
 final_data_clean <- final_data %>%
   clean_names()
 
-# Now select and reshape the cleaned data
 plot_df <- final_data_clean %>%
   select(age = age_x,
          male_drunk_high = male_drunk_high_in_school_1_time,

@@ -3,9 +3,6 @@ Project title
 by Passionate Puffins 2 (Aidan, Mary, and Katie)
 
 ## Summary
-
-
-
 Our project explores the relationship between home support systems and the health behaviors of high school students in Androscoggin County. Our data comes from a student survey administered across local school districts in the area. We aim to visualize how family support influences students when making healthy or unhealthy life choices. Specifically, we analyzed self-reported behavior such as smoking, drinking or using drugs in school, and at-home eating habits while examining how supported students felt by their parents. Support is used generally here, meaning academic, health, and social support for their children.
 
 This research is supported by prior findings from the National Institute of Health, which have shown that strong parental involvement can reduce the likelihood of risky behaviors in teens, like smoking cigarettes. Our study aims to test those national findings at a local level in Androscoggin County while including unique variables like gender within this study to understand better how male and female children react to familial support and how they may be affected by unhealthy behaviors like smoking, alcohol, and indicators like being overweight or eating meals with family.
